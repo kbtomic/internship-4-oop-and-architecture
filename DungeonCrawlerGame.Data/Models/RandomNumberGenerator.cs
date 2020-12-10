@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DungeonCrawlerGame.Domain.Helpers
+namespace DungeonCrawlerGame.Data.Models
 {
     public static class RandomNumberGenerator
     {
@@ -15,7 +15,7 @@ namespace DungeonCrawlerGame.Domain.Helpers
         }
         public static Monster GenerateMonster()
         {
-            var randomNumber = GenerateInRange(0, 100);
+            var randomNumber = GenerateInRange(StartValues.UpperBoundRandomGenerator, StartValues.LowerBoundRandomGenerator);
             if (randomNumber <= 70 && randomNumber >= 0)
                 return new Goblin();
             else if (randomNumber <= 95 && randomNumber >= 71)

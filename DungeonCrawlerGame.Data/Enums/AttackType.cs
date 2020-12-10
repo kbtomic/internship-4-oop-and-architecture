@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DungeonCrawlerGame.Data.Enums
 {
-    public enum EnumTypeAttack
+    public enum AttackType
     {
         DirectAttack,
         SideAttack,

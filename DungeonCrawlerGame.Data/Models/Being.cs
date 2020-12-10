@@ -6,15 +6,13 @@ namespace DungeonCrawlerGame.Data.Models
 {
     public class Being
     {
-        public string Name { get; set; }
         public int MaxHealthPoints { get; set; }
         public int HealthPoints { get; set; }
         public int Damage { get; set; }
-        public virtual int Attack()
+        public virtual void Attack(Being being)
         {
-            return 0;
         }
-        public void BeAttacked(int damage)
+        public virtual void BeAttacked(int damage)
         {
             HealthPoints -= damage;
             if (HealthPoints <= 0)
@@ -22,7 +20,7 @@ namespace DungeonCrawlerGame.Data.Models
         }
         public void Death()
         {
-
+            //this = null;
         }
     }
 }

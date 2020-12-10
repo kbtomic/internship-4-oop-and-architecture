@@ -6,5 +6,20 @@ namespace DungeonCrawlerGame.Data.Models.Monsters
 {
     public class Witch : Monster
     {
+        public Witch()
+        {
+            MaxHealthPoints = RandomNumberGenerator.GenerateInRange(StartValues.LowerBoundWitchHP, StartValues.UpperBoundWitchHP);
+            Damage = RandomNumberGenerator.GenerateInRange(StartValues.LowerBoundWitchDamage, StartValues.UpperBoundWitchDamage);
+            HealthPoints = MaxHealthPoints;
+            Experience = StartValues.ExperienceFromDefeatedWitch;
+        }
+        public override void BeAttacked(int damage)
+        {
+            HealthPoints -= damage;
+            if (HealthPoints <= 0)
+            {
+                
+            }
+        }
     }
 }
