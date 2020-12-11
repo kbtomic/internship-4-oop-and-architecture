@@ -15,7 +15,7 @@ namespace DungeonCrawlerGame.Data.Models
         }
         public static Monster GenerateMonster()
         {
-            var randomNumber = GenerateInRange(StartValues.UpperBoundRandomGenerator, StartValues.LowerBoundRandomGenerator);
+            var randomNumber = GenerateInRange(StartValues.LowerBoundRandomGenerator, StartValues.UpperBoundRandomGenerator);
             if (randomNumber <= 70 && randomNumber >= 0)
                 return new Goblin();
             else if (randomNumber <= 95 && randomNumber >= 71)

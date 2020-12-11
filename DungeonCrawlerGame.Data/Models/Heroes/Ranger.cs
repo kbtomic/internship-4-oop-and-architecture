@@ -30,7 +30,7 @@ namespace DungeonCrawlerGame.Data.Models.Heroes
         }
         public bool IsDoubleDamage()
         {
-            return (RandomNumberGenerator.GenerateInRange(StartValues.LowerBoundRandomGenerator, StartValues.UpperBoundRandomGenerator) < 30);
+            return (RandomNumberGenerator.GenerateInRange(StartValues.LowerBoundRandomGenerator, StartValues.UpperBoundRandomGenerator) < StartValues.ProbabilityPercentage);
         }
         public bool IsStunChance()
         {
@@ -38,7 +38,7 @@ namespace DungeonCrawlerGame.Data.Models.Heroes
         }
         public bool IsMonsterStunned()
         {
-            return (RandomNumberGenerator.GenerateInRange(StartValues.LowerBoundRandomGenerator, StartValues.UpperBoundRandomGenerator) < 30);
+            return (RandomNumberGenerator.GenerateInRange(StartValues.LowerBoundRandomGenerator, StartValues.UpperBoundRandomGenerator) < StartValues.ProbabilityPercentage);
         }
     }
 }

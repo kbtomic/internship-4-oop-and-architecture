@@ -10,15 +10,12 @@ namespace DungeonCrawlerGame.Presentation
     {
         static void Main(string[] args)
         {
-            for (var i = 0; i < 3; i++)
-            {
-                Console.WriteLine(Data.Enums.AttackType.CounterAttack.ToString());
-            }
             Console.BackgroundColor = ConsoleColor.Red;
             Console.WriteLine("Welcome to the Dungeon Crawler game!");
-            var myHero = Game.ChooseHeroType();
-            Game.ChooseHeroName(myHero);
-            Game.HeroStartValues(myHero);
+            var myHero = StartGame.ChooseHeroType();
+            var monsters = StartGame.GenerateMonsters();
+            BattleService.RoundWinner(myHero, monsters[0]);
+            
         }
     }
 }
