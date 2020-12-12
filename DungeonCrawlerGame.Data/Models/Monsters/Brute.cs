@@ -22,5 +22,10 @@ namespace DungeonCrawlerGame.Data.Models.Monsters
             else
                 hero.BeAttacked(Damage);
         }
+        public override string ToString()
+        {
+            return $"I am brute!\n" +
+                $"{base.ToString()}";
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DungeonCrawlerGame.Data.Models.Monsters;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -31,15 +32,21 @@ namespace DungeonCrawlerGame.Data.Models.Heroes
             else
             {
                 _isRespawned = true;
+                HealthPoints = MaxHealthPoints;
                 return true;
             }
         }
+        public bool CanRenewHPForMana()
+        {
+            return (Mana >= StartValues.ManaConsumptionForRenewingHP);
+        }
         public void RenewHPForMana()
         {
-            if (Mana >= StartValues.ManaConsumptionForRenewingHP)
+            if (CanRenewHPForMana())
             {
                 HealthPoints = MaxHealthPoints;
                 Mana -= StartValues.ManaConsumptionForRenewingHP;
+                Console.WriteLine("HP is renewed!");
             }
         }
         public override void Attack(Being monster)
@@ -50,7 +57,14 @@ namespace DungeonCrawlerGame.Data.Models.Heroes
             {
                 monster.BeAttacked(Damage);
                 Mana -= StartValues.ManaConsumptionForAttacking;
+                ValuesWhenMonsterIsDefeated(monster as Monster);
             }
+        }
+        public override string ToString()
+        {
+            return $"I am mage!\n" +
+                $"{base.ToString()}" +
+                $"Mana:{Mana}\n";
         }
     }
 }

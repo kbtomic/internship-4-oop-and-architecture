@@ -5,45 +5,87 @@ using DungeonCrawlerGame.Data.Enums;
 using DungeonCrawlerGame.Data.Models;
 using DungeonCrawlerGame.Data.Models.Heroes;
 using DungeonCrawlerGame.Data.Models.Monsters;
+using DungeonCrawlerGame.Domain.Helpers;
 
 namespace DungeonCrawlerGame.Domain.Services
 {
     public static class BattleService
     {
+        public static void Battle(Hero myHero, Monster monster, List<Monster> monsters)
+        {
+            while (!myHero.IsDead && !monster.IsDead)
+            {
+                var roundWinner = RoundWinner(myHero, monster);
+                if (roundWinner is Warrior warrior)
+                {
+                    HeroIsAttacking.WarriorAttack(warrior, monster);
+                }
+                else if (roundWinner is Mage mage)
+                {
+                    HeroIsAttacking.MageAttack(mage, monster);
+                }
+                else if (roundWinner is Ranger ranger)
+                {
+                    HeroIsAttacking.RangerAttack(ranger, monster);
+                }
+                else if (roundWinner is Goblin goblin)
+                {
+                    MonsterIsAttacking.GoblinAttack(myHero, goblin);
+                }
+                else if (roundWinner is Brute brute)
+                {
+                    MonsterIsAttacking.BruteAttack(myHero, brute);
+                }
+                else if (roundWinner is Witch witch)
+                {
+                    MonsterIsAttacking.WitchAttack(myHero, witch, monsters);
+                }
+                Console.BackgroundColor = ConsoleColor.Blue;
+                GameStatistics.PrintStats(myHero, monster, monsters);
+            }
+        }
         public static Being RoundWinner(Hero myHero, Monster monster)
         {
+            Console.BackgroundColor = ConsoleColor.Blue;
+            if(monster.IsStunned)
+            {
+                monster.IsStunned = false;
+                Console.WriteLine("You won this round because monster is stunned!");
+                return myHero;
+            }
+
             Console.WriteLine("Enter '0' for direct attack, '1' for side attack, '2' for counter attack");
             var heroStrategySuccess = int.TryParse(Console.ReadLine(), out var heroStrategy);
-            while(!heroStrategySuccess || !heroStrategy.Equals(Data.Enums.AttackType.DirectAttack) || !heroStrategy.Equals(Data.Enums.AttackType.SideAttack)
-                                       || !heroStrategy.Equals(Data.Enums.AttackType.CounterAttack))
+            while(!heroStrategySuccess || (heroStrategy != (int)AttackType.DirectAttack && heroStrategy != (int)AttackType.SideAttack 
+                && heroStrategy != (int)AttackType.CounterAttack))
             {
                 Console.WriteLine("Enter '0' for direct attack, '1' for side attack, '2' for counter attack");
                 heroStrategySuccess = int.TryParse(Console.ReadLine(), out heroStrategy);
             }
-            var monsterStrategy = RandomNumberGenerator.GenerateInRange((int)Data.Enums.AttackType.DirectAttack, (int)Data.Enums.AttackType.CounterAttack + 1);
-            if (heroStrategy.Equals(Data.Enums.AttackType.DirectAttack) && monsterStrategy.Equals(Data.Enums.AttackType.SideAttack))
+            var heroStrategyAsAttackType = (AttackType)heroStrategy;
+            var monsterStrategyAsAttackType = (AttackType)RandomNumberGenerator.GenerateInRange((int)AttackType.DirectAttack, (int)AttackType.CounterAttack + 1);
+            if (heroStrategyAsAttackType == AttackType.DirectAttack && monsterStrategyAsAttackType == AttackType.SideAttack)
             {
+                Console.WriteLine("You won this round!");
                 return myHero;
             }
-            else if (heroStrategy.Equals(Data.Enums.AttackType.SideAttack) && monsterStrategy.Equals(Data.Enums.AttackType.CounterAttack))
+            else if (heroStrategyAsAttackType == AttackType.SideAttack && monsterStrategyAsAttackType == AttackType.CounterAttack)
             {
+                Console.WriteLine("You won this round");
                 return myHero;
             }
-            else if (heroStrategy.Equals(Data.Enums.AttackType.CounterAttack) && monsterStrategy.Equals(Data.Enums.AttackType.DirectAttack))
+            else if (heroStrategyAsAttackType == AttackType.CounterAttack && monsterStrategyAsAttackType == AttackType.DirectAttack)
             {
+                Console.WriteLine("You won this round!");
                 return myHero;
             }
-            else if (heroStrategy.Equals(monsterStrategy))
+            else if (heroStrategyAsAttackType == monsterStrategyAsAttackType)
             {
-                RoundWinner(myHero, monster);
+                return RoundWinner(myHero, monster);
             }
-            else
-            {
-                return monster;
-            }
-            return null;
-
-
+            Console.WriteLine("Monster won this round so prepare to defend!");
+            return monster;
+            
         }
     }
 }

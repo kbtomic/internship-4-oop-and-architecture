@@ -13,16 +13,22 @@ namespace DungeonCrawlerGame.Data.Models.Heroes
             Damage = RandomNumberGenerator.GenerateInRange(StartValues.LowerBoundRangerDamage, StartValues.UpperBoundRangerDamage);
             HealthPoints = MaxHealthPoints;
         }
-        public override void Attack(Being monster)
+        public void CritStunAttack(Monster monster)
         {
             if (IsCriticalChance() && IsDoubleDamage())
-                    monster.BeAttacked(Damage * 2);
+            {
+                monster.BeAttacked(Damage * 2);
+                ValuesWhenMonsterIsDefeated(monster);
+            }
             else if (IsStunChance() && IsMonsterStunned())
             {
-
+                monster.IsStunned = true;
             }
             else
-                monster.BeAttacked(Damage);
+            {
+                Attack(monster);
+                ValuesWhenMonsterIsDefeated(monster);
+            }
         }
         public bool IsCriticalChance()
         {
@@ -39,6 +45,11 @@ namespace DungeonCrawlerGame.Data.Models.Heroes
         public bool IsMonsterStunned()
         {
             return (RandomNumberGenerator.GenerateInRange(StartValues.LowerBoundRandomGenerator, StartValues.UpperBoundRandomGenerator) < StartValues.ProbabilityPercentage);
+        }
+        public override string ToString()
+        {
+            return $"I am ranger!\n" +
+                $"{base.ToString()}";
         }
     }
 }

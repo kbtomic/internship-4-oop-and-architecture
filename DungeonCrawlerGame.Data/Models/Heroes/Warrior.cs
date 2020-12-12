@@ -13,15 +13,24 @@ namespace DungeonCrawlerGame.Data.Models.Heroes
             Damage = RandomNumberGenerator.GenerateInRange(StartValues.LowerBoundWarriorDamage, StartValues.UpperBoundWarriorDamage);    
             HealthPoints = MaxHealthPoints;
         }
+        public bool CanRageAttack()
+        {
+            return (HealthPoints >= (int)(0.2 * MaxHealthPoints) + 1);
+        }
         public void RageAttack(Monster monster)
         {
-            if(HealthPoints >=(int)( 0.2 * MaxHealthPoints) + 1)
+            if (CanRageAttack())
+            {
+                Console.WriteLine("Rage attacking grrrr!!!");
                 HealthPoints = (int)(HealthPoints - 0.2 * MaxHealthPoints);
-            monster.BeAttacked(Damage * 2);
+                monster.BeAttacked(Damage * 2);
+            }
+            ValuesWhenMonsterIsDefeated(monster);
         }
-        public override void Attack(Being monster)
+        public override string ToString()
         {
-            monster.BeAttacked(Damage);
+            return $"I am warrior!\n" +
+                $"{base.ToString()}";
         }
 
     }                     

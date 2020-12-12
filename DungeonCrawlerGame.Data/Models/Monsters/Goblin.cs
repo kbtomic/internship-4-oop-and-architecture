@@ -13,5 +13,10 @@ namespace DungeonCrawlerGame.Data.Models.Monsters
             HealthPoints = MaxHealthPoints;
             Experience = StartValues.ExperienceFromDefeatedGoblin;
         }
+        public override string ToString()
+        {
+            return $"I am goblin!\n" +
+                $"{base.ToString()}";
+        }
     }
 }

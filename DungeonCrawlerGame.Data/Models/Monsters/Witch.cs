@@ -13,13 +13,15 @@ namespace DungeonCrawlerGame.Data.Models.Monsters
             HealthPoints = MaxHealthPoints;
             Experience = StartValues.ExperienceFromDefeatedWitch;
         }
-        public override void BeAttacked(int damage)
+        public bool IsDumbusAttack()
         {
-            HealthPoints -= damage;
-            if (HealthPoints <= 0)
-            {
-                
-            }
+            return (RandomNumberGenerator.GenerateInRange(StartValues.LowerBoundRangerDamage, StartValues.UpperBoundRandomGenerator) < StartValues.ProbabilityPercentage);
+        }
+   
+        public override string ToString()
+        {
+            return $"I am witch!\n" +
+                $"{base.ToString()}";
         }
     }
 }

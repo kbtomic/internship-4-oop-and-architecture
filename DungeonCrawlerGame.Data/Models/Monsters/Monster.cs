@@ -7,5 +7,12 @@ namespace DungeonCrawlerGame.Data.Models.Monsters
     public class Monster : Being
     {
         public int Experience { get; set; }
+        public bool IsStunned { get; set; } = false;
+        public override string ToString()
+        {
+            return $"{base.ToString()}" +
+                $"Experience:{Experience}\n" +
+                $"Is stunned:{IsStunned}\n";
+        }
     }
 }
