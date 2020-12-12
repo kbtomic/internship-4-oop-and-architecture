@@ -36,6 +36,21 @@ namespace DungeonCrawlerGame.Data.Models.Heroes
                 return true;
             }
         }
+        public override void BeAttacked(int damage)
+        {
+            HealthPoints -= damage;
+            if (HealthPoints <= 0)
+            {
+                HealthPoints = 0;
+                IsDead = true;
+                if(Respawn())
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Respawn!");
+                    IsDead = false;
+                }
+            }
+        }
         public bool CanRenewHPForMana()
         {
             return (Mana >= StartValues.ManaConsumptionForRenewingHP);

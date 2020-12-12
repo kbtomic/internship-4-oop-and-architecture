@@ -10,7 +10,6 @@ namespace DungeonCrawlerGame.Domain.Helpers
     {
         public static void PrintStats(Hero myHero, Monster currentMonster, List<Monster> monsters)
         {
-            Console.BackgroundColor = ConsoleColor.Black;
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("Current statistics:\n");
             Console.WriteLine(myHero.ToString());

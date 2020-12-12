@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using DungeonCrawlerGame.Data.Models.Monsters;
 using DungeonCrawlerGame.Data.Models;
+using DungeonCrawlerGame.Data.Enums;
 
 namespace DungeonCrawlerGame.Domain.Helpers
 {
@@ -28,46 +29,40 @@ namespace DungeonCrawlerGame.Domain.Helpers
             Console.WriteLine("Ranger has medium HP and Damage! " +
                 "It has two special abilities - critical chance and stun chance!\n");
 
-            
-            var heroType = " ";
-            do
-            {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Choose type of your hero - warrior, mage or ranger!");
-                heroType = Console.ReadLine();
-                if (heroType.ToLower().Equals("warrior"))
+                Console.WriteLine("Choose type of your hero - '0' for warrior, '1' for mage or '2' for ranger!");
+                var heroTypeSuccess = int.TryParse(Console.ReadLine(), out var heroType);
+                while (!heroTypeSuccess || (heroType != (int)HeroType.Warrior && heroType != (int)HeroType.Mage && heroType != (int)HeroType.Ranger))
+                {
+                    Console.WriteLine("Choose type of your hero - '0' for warrior, '1' for mage or '2' for ranger!");
+                    heroTypeSuccess = int.TryParse(Console.ReadLine(), out heroType);
+                }
+                var heroTypeAsHeroType = (HeroType)heroType;
+                if (heroTypeAsHeroType == HeroType.Warrior)
                 {
                     var myHero = new Warrior();
                     UserInputHeroHP(myHero);
                     myHero.Name = heroName;
                     return myHero;
                 }
-                else if (heroType.ToLower().Equals("mage"))
+                else if (heroTypeAsHeroType == HeroType.Mage)
                 {
                     var myHero = new Mage();
                     UserInputHeroHP(myHero);
                     myHero.Name = heroName;
                     return myHero;
                 }
-                else if (heroType.ToLower().Equals("ranger"))
+                else if (heroTypeAsHeroType == HeroType.Ranger)
                 {
                     var myHero = new Ranger();
                     UserInputHeroHP(myHero);
                     myHero.Name = heroName;
                     return myHero;
                 }
-                else
-                {
-                    Console.BackgroundColor = ConsoleColor.Black;
-                    Console.ForegroundColor = ConsoleColor.White;
-                    Console.WriteLine("That hero type does not exist!");
-                }
-            } while (String.IsNullOrEmpty(heroType) || !heroType.ToLower().Equals("warrior") || !heroType.ToLower().Equals("mage")
-                            || !heroType.ToLower().Equals("ranger"));
-            return null;
-
+                return null;
         }
-     
+
+
         public static void UserInputHeroHP(Hero myHero)
         {
             Console.WriteLine("If you want to choose HP for your hero type 'yes', or I will do it for you he he!");

@@ -33,8 +33,7 @@ namespace DungeonCrawlerGame.Domain.Services
                     {
                         myHero.Experience -= (int)(0.5 * myHero.Experience);
                         myHero.HealthPoints = myHero.MaxHealthPoints;
-                        Console.WriteLine("HP renewed!\n");
-                        GameStatistics.PrintStats(myHero, monsters[i], monsters);
+                        Console.WriteLine("HP renewed!\n"); 
                     }
                 }
                 if (monsters[i].IsDead && monsters[i] is Witch)
@@ -43,23 +42,11 @@ namespace DungeonCrawlerGame.Domain.Services
                     monsters.Insert(i + 2, RandomNumberGenerator.GenerateMonster());
                 }
                 else if (myHero.IsDead)
-                {
-                    if (myHero is Mage mage)
-                    {
-                        if (mage.Respawn())
-                        {
-                            Console.WriteLine("I am respawning!\n");
-                            myHero.IsDead = false;
-                        }
-                    }
-                    else
-                    {
+                { 
                         Console.BackgroundColor = ConsoleColor.Black;
                         Console.ForegroundColor = ConsoleColor.White;
                         Console.WriteLine("You are DEAD!!!");
                         break;
-                    }
-
                 }
             }
             if (!myHero.IsDead)

@@ -33,17 +33,20 @@ namespace DungeonCrawlerGame.Domain.Services
             Console.ForegroundColor = ConsoleColor.Red;
             if (myMage.CanRenewHPForMana())
             {
-                Console.WriteLine($"I can use {StartValues.ManaConsumptionForRenewingHP} units of Mana for renew my HP!");
-                var useManaForRenewingHP = " ";
-                do
+                if(myMage.HealthPoints != myMage.MaxHealthPoints)
                 {
-                    Console.WriteLine("Please type 'MANA' and I will renew my HP!");
-                    useManaForRenewingHP = Console.ReadLine();
-                } while (String.IsNullOrEmpty(useManaForRenewingHP));
-                if (useManaForRenewingHP.ToLower().Equals("mana"))
-                    myMage.RenewHPForMana();
-                else
-                    myMage.Attack(monster);
+                    Console.WriteLine($"I can use {StartValues.ManaConsumptionForRenewingHP} units of Mana for renew my HP!");
+                    var useManaForRenewingHP = " ";
+                    do
+                    {
+                        Console.WriteLine("Please type 'MANA' and I will renew my HP!");
+                        useManaForRenewingHP = Console.ReadLine();
+                    } while (String.IsNullOrEmpty(useManaForRenewingHP));
+                    if (useManaForRenewingHP.ToLower().Equals("mana"))
+                        myMage.RenewHPForMana();
+                    else
+                        myMage.Attack(monster);
+                }
             }
             else
                 myMage.Attack(monster);

@@ -66,16 +66,19 @@ namespace DungeonCrawlerGame.Domain.Services
             var monsterStrategyAsAttackType = (AttackType)RandomNumberGenerator.GenerateInRange((int)AttackType.DirectAttack, (int)AttackType.CounterAttack + 1);
             if (heroStrategyAsAttackType == AttackType.DirectAttack && monsterStrategyAsAttackType == AttackType.SideAttack)
             {
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("You won this round so you are attacking!\n");
                 return myHero;
             }
             else if (heroStrategyAsAttackType == AttackType.SideAttack && monsterStrategyAsAttackType == AttackType.CounterAttack)
             {
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("You won this round so you are attacking!\n");
                 return myHero;
             }
             else if (heroStrategyAsAttackType == AttackType.CounterAttack && monsterStrategyAsAttackType == AttackType.DirectAttack)
             {
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("You won this round so you are attacking!\n");
                 return myHero;
             }
@@ -84,6 +87,7 @@ namespace DungeonCrawlerGame.Domain.Services
                 Console.WriteLine("Tied!\n");
                 return RoundWinner(myHero, monster);
             }
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Monster won this round so defend yourself!\n");
             return monster;
             
