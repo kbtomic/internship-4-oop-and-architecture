@@ -10,11 +10,11 @@ namespace DungeonCrawlerGame.Presentation
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("Welcome to the Dungeon Crawler game!");
             do
             {
                 GameFlow.Start();
             } while (!GameFlow.End());
-            
         }
     }
 }

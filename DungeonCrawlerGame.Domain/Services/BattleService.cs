@@ -15,6 +15,8 @@ namespace DungeonCrawlerGame.Domain.Services
         {
             while (!myHero.IsDead && !monster.IsDead)
             {
+                if (!monster.IsDead)
+                    GameStatistics.PrintStats(myHero, monster, monsters);
                 var roundWinner = RoundWinner(myHero, monster);
                 if (roundWinner is Warrior warrior)
                 {
@@ -40,13 +42,11 @@ namespace DungeonCrawlerGame.Domain.Services
                 {
                     MonsterIsAttacking.WitchAttack(myHero, witch, monsters);
                 }
-                Console.BackgroundColor = ConsoleColor.Blue;
-                GameStatistics.PrintStats(myHero, monster, monsters);
             }
         }
         public static Being RoundWinner(Hero myHero, Monster monster)
         {
-            Console.BackgroundColor = ConsoleColor.Blue;
+            Console.ForegroundColor = ConsoleColor.Blue;
             if(monster.IsStunned)
             {
                 monster.IsStunned = false;
@@ -66,24 +66,25 @@ namespace DungeonCrawlerGame.Domain.Services
             var monsterStrategyAsAttackType = (AttackType)RandomNumberGenerator.GenerateInRange((int)AttackType.DirectAttack, (int)AttackType.CounterAttack + 1);
             if (heroStrategyAsAttackType == AttackType.DirectAttack && monsterStrategyAsAttackType == AttackType.SideAttack)
             {
-                Console.WriteLine("You won this round!");
+                Console.WriteLine("You won this round so you are attacking!\n");
                 return myHero;
             }
             else if (heroStrategyAsAttackType == AttackType.SideAttack && monsterStrategyAsAttackType == AttackType.CounterAttack)
             {
-                Console.WriteLine("You won this round");
+                Console.WriteLine("You won this round so you are attacking!\n");
                 return myHero;
             }
             else if (heroStrategyAsAttackType == AttackType.CounterAttack && monsterStrategyAsAttackType == AttackType.DirectAttack)
             {
-                Console.WriteLine("You won this round!");
+                Console.WriteLine("You won this round so you are attacking!\n");
                 return myHero;
             }
             else if (heroStrategyAsAttackType == monsterStrategyAsAttackType)
             {
+                Console.WriteLine("Tied!\n");
                 return RoundWinner(myHero, monster);
             }
-            Console.WriteLine("Monster won this round so prepare to defend!");
+            Console.WriteLine("Monster won this round so defend yourself!\n");
             return monster;
             
         }

@@ -21,7 +21,11 @@ namespace DungeonCrawlerGame.Data.Models.Monsters
         public override string ToString()
         {
             return $"I am witch!\n" +
-                $"{base.ToString()}";
+                $"{base.ToString()}\n";
+        }
+        public override string MonsterType()
+        {
+            return $"{base.MonsterType()} To be more specific - witch.\n";
         }
     }
 }

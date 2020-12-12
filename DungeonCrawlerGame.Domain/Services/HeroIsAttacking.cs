@@ -11,6 +11,7 @@ namespace DungeonCrawlerGame.Domain.Services
     {
         public static void WarriorAttack(Warrior myWarrior, Monster monster)
         {
+            Console.ForegroundColor = ConsoleColor.Red;
             if (myWarrior.CanRageAttack()) {
                 Console.WriteLine("I can rage attack monster and cause him double damage");
             var attackStrategy = " ";
@@ -29,6 +30,7 @@ namespace DungeonCrawlerGame.Domain.Services
         }
         public static void MageAttack(Mage myMage, Monster monster)
         {
+            Console.ForegroundColor = ConsoleColor.Red;
             if (myMage.CanRenewHPForMana())
             {
                 Console.WriteLine($"I can use {StartValues.ManaConsumptionForRenewingHP} units of Mana for renew my HP!");
@@ -48,6 +50,7 @@ namespace DungeonCrawlerGame.Domain.Services
         }
         public static void RangerAttack(Ranger myRanger, Monster monster)
         {
+            Console.ForegroundColor = ConsoleColor.Red;
             myRanger.CritStunAttack(monster);
         }
     }

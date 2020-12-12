@@ -12,8 +12,7 @@ namespace DungeonCrawlerGame.Domain.Services
     {
         public static void Start()
         {
-            Console.BackgroundColor = ConsoleColor.Red;
-            Console.WriteLine("Welcome to the Dungeon Crawler game!");
+            Console.ForegroundColor = ConsoleColor.Red;
             var myHero = HeroAndMonstersFactory.ChooseHeroType();
             var monsters = HeroAndMonstersFactory.GenerateMonsters();
             for (var i = 0; i < monsters.Count; i++)
@@ -21,6 +20,10 @@ namespace DungeonCrawlerGame.Domain.Services
                 BattleService.Battle(myHero, monsters[i], monsters);
                 if(monsters[i].IsDead)
                 {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"Bye bye {monsters[i].MonsterType()}");
+                    GameStatistics.PrintStats(myHero, monsters[i + 1], monsters);
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("If you want to use 50% of your experience points to renew your HP type 'yes'!");
                     var confirmation = " ";
                     do {
@@ -30,7 +33,7 @@ namespace DungeonCrawlerGame.Domain.Services
                     {
                         myHero.Experience -= (int)(0.5 * myHero.Experience);
                         myHero.HealthPoints = myHero.MaxHealthPoints;
-                        Console.WriteLine("HP renewed!");
+                        Console.WriteLine("HP renewed!\n");
                         GameStatistics.PrintStats(myHero, monsters[i], monsters);
                     }
                 }
@@ -45,24 +48,31 @@ namespace DungeonCrawlerGame.Domain.Services
                     {
                         if (mage.Respawn())
                         {
-                            Console.WriteLine("I am respawning!");
+                            Console.WriteLine("I am respawning!\n");
                             myHero.IsDead = false;
                         }
                     }
                     else
                     {
+                        Console.BackgroundColor = ConsoleColor.Black;
+                        Console.ForegroundColor = ConsoleColor.White;
                         Console.WriteLine("You are DEAD!!!");
                         break;
                     }
 
                 }
             }
-            Console.WriteLine("You won!!!");
+            if (!myHero.IsDead)
+            {
+                Console.BackgroundColor = ConsoleColor.Black;
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine("You are WINNER!!!");
+            }
         }
         public static bool End()
         {
-            Console.BackgroundColor = ConsoleColor.Red;
-            Console.WriteLine("This is the end of your journey my pal!");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("This is the end of the game my pal!");
             Console.WriteLine("If you want to start your journey again please type 'yes'!");
             var confirmation = " ";
             do

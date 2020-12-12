@@ -12,7 +12,11 @@ namespace DungeonCrawlerGame.Data.Models.Monsters
         {
             return $"{base.ToString()}" +
                 $"Experience:{Experience}\n" +
-                $"Is stunned:{IsStunned}\n";
+                $"Is stunned:{IsStunned}";
+        }
+        public virtual string MonsterType()
+        {
+            return "monster!";
         }
     }
 }

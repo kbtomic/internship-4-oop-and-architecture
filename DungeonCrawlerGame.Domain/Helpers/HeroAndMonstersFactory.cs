@@ -18,18 +18,21 @@ namespace DungeonCrawlerGame.Domain.Helpers
                 Console.WriteLine("Please enter name of your hero!");
                 heroName = Console.ReadLine();
             } while (String.IsNullOrEmpty(heroName));
-          
+
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("Warrior has the highest HP and the lowest Damage! " +
-                "It can rage attack the monster - for cost of 20% HP it causes double damage to monster!");
+                "It can rage attack the monster - for cost of 20% HP it causes double damage to monster!\n");
             Console.WriteLine("Mage has the lowest HP and the biggest Damage! " +
-                "It has special ability - MANA and also can respawn once!");
+                "It has special ability - MANA and also can respawn once!\n");
             Console.WriteLine("Ranger has medium HP and Damage! " +
-                "It has two special abilities - critical chance and stun chance!");
+                "It has two special abilities - critical chance and stun chance!\n");
 
             
             var heroType = " ";
             do
             {
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Choose type of your hero - warrior, mage or ranger!");
                 heroType = Console.ReadLine();
                 if (heroType.ToLower().Equals("warrior"))
@@ -55,6 +58,8 @@ namespace DungeonCrawlerGame.Domain.Helpers
                 }
                 else
                 {
+                    Console.BackgroundColor = ConsoleColor.Black;
+                    Console.ForegroundColor = ConsoleColor.White;
                     Console.WriteLine("That hero type does not exist!");
                 }
             } while (String.IsNullOrEmpty(heroType) || !heroType.ToLower().Equals("warrior") || !heroType.ToLower().Equals("mage")
