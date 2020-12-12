@@ -25,8 +25,12 @@ namespace DungeonCrawlerGame.Domain.Services
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("Dumbus attack!!!");
                 myHero.HealthPoints = RandomNumberGenerator.GenerateInRange(StartValues.LowerBoundHP, StartValues.UpperBoundHP);
-                for(var i = 0; i < monsters.Count;i++)
+                myHero.MaxHealthPoints = myHero.HealthPoints;
+                for (var i = 0; i < monsters.Count; i++)
+                {
                     monsters[i].HealthPoints = RandomNumberGenerator.GenerateInRange(StartValues.LowerBoundHP, StartValues.UpperBoundHP);
+                    monsters[i].MaxHealthPoints = monsters[i].HealthPoints;
+                }
             }
             else
                 monster.Attack(myHero);
